@@ -14,7 +14,7 @@ description: >
   alex (at) stty.io
 
 
-  [public key](https://github.com/spaghetti-.keys)
+  [gpg public key](https://raw.githubusercontent.com/spaghetti-/blog/gh-pages/key.asc)
 author: Alex
 language:
 timezone:
