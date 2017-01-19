@@ -8,6 +8,16 @@ author: alex
 know are still using plain `catkin_make` to build their workspaces but that is
 pretty basic. Please use `catkin`, it is much more powerful and convienient.
 
+For one, it can resolve dependencies and parallelize your workspace compilation.
+When you're building individual packages it can sometimes be useful as it'll
+detect if your dependencies are out of date and compile them too.
+
+Install catkin with
+
+```
+pip install catkin catkin_tools
+```
+
 To initialize a workspace (that already has a `src` folder)
 
 ```sh
@@ -46,8 +56,7 @@ Or blacklist/whitelist with
 catkin config (--blacklist|--whitelist) pkg
 ```
 
-catkin will build your workspace in parallel and resolve dependencies
-automatically. If you are building an individual package you can force it to
+If you are building an individual package you can force it to
 build only that package by 
 
 ```sh
