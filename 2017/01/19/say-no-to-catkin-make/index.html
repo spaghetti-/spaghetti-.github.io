@@ -16,7 +16,7 @@ pretty basic. Please use catkin, it is much more">
 <meta property="og:description" content="catkin is the wrapper around cmake that ROS uses. Majority of the people I
 know are still using plain catkin_make to build their workspaces but that is
 pretty basic. Please use catkin, it is much more">
-<meta property="og:updated_time" content="2017-01-19T09:14:36.000Z">
+<meta property="og:updated_time" content="2017-01-19T09:27:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Say no to catkin_make">
 <meta name="twitter:description" content="catkin is the wrapper around cmake that ROS uses. Majority of the people I
@@ -146,6 +146,11 @@ pretty basic. Please use catkin, it is much more">
     <p><code>catkin</code> is the wrapper around cmake that ROS uses. Majority of the people I
 know are still using plain <code>catkin_make</code> to build their workspaces but that is
 pretty basic. Please use <code>catkin</code>, it is much more powerful and convienient.</p>
+<p>For one, it can resolve dependencies and parallelize your workspace compilation.
+When you’re building individual packages it can sometimes be useful as it’ll
+detect if your dependencies are out of date and compile them too.</p>
+<p>Install catkin with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install catkin catkin_tools</div></pre></td></tr></table></figure>
 <p>To initialize a workspace (that already has a <code>src</code> folder)</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">catkin init</div><div class="line">catkin build</div></pre></td></tr></table></figure>
 <p>Then you can easily set cmake parameters</p>
@@ -157,8 +162,7 @@ pretty basic. Please use <code>catkin</code>, it is much more powerful and convi
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catkin build pkg</div></pre></td></tr></table></figure>
 <p>Or blacklist/whitelist with </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catkin config (--blacklist|--whitelist) pkg</div></pre></td></tr></table></figure>
-<p>catkin will build your workspace in parallel and resolve dependencies
-automatically. If you are building an individual package you can force it to
+<p>If you are building an individual package you can force it to
 build only that package by </p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">catkin build pkg --no-deps</div></pre></td></tr></table></figure>
 <p>Verbosity and job control</p>
