@@ -5,10 +5,13 @@ tags: freebsd
 author: alex
 ---
 
-I often find myself spawning random EC2 instances or DigitalOcean FreeBSD
+I often find myself spawning random DigitalOcean FreeBSD
 droplets for prototyping web services. Just because they are temporary does not
 mean that they should not have secure defaults however. Here's a short script
 that sets up `sshd` as well as initializes the `ipfw` firewall.
+
+For AWS instances we're better off using VPC with sane security groups to do our
+firewalling for us.
 
 It can be run using
 
