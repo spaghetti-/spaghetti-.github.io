@@ -6,19 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored.
-It uses xarg">
+    <meta name="description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored. It uses xarg">
+<meta name="keywords" content="shell, scripting">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Simple shell function to download images from 4chan threads in parallel">
 <meta property="og:url" content="http://stty.io/2017/01/16/4chan-parallel-image-downloader/index.html">
 <meta property="og:site_name" content="stty.io">
-<meta property="og:description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored.
-It uses xarg">
-<meta property="og:updated_time" content="2017-01-15T22:45:26.000Z">
+<meta property="og:description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored. It uses xarg">
+<meta property="og:updated_time" content="2017-07-16T08:35:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Simple shell function to download images from 4chan threads in parallel">
-<meta name="twitter:description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored.
-It uses xarg">
+<meta name="twitter:description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored. It uses xarg">
     
     
         
@@ -142,7 +140,7 @@ It uses xarg">
   <div class="content" itemprop="articleBody">
     <p>This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored.</p>
 <p>It uses <code>xargs</code> to dispatch downloads to threads and uses only commonly used unix tools. If we replace the <code>\d</code> regex with <code>[0-9]</code> it’ll work with plain <code>grep</code> without relying on PCRE.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">4get</span></span>() &#123;</div><div class="line">  curl -k <span class="_">-s</span> <span class="variable">$1</span> | egrep -o \</div><div class="line">    <span class="string">"\/\/is\d?\.4chan\.org\/gif\/\d+\.(webm|gif|jpeg|jpg|png)"</span> | \</div><div class="line">    sed <span class="string">'s/^/https:/; s/is\d?\.4chan\.org/i\.4cdn\.org/'</span> | uniq | \</div><div class="line">    xargs -n 1 -P 12 curl -<span class="comment"># -O</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">4get</span></span>() &#123;</div><div class="line">  curl -k -s <span class="variable">$1</span> | egrep -o \</div><div class="line">    <span class="string">"\/\/is\d?\.4chan\.org\/gif\/\d+\.(webm|gif|jpeg|jpg|png)"</span> | \</div><div class="line">    sed <span class="string">'s/^/https:/; s/is\d?\.4chan\.org/i\.4cdn\.org/'</span> | uniq | \</div><div class="line">    xargs -n 1 -P 12 curl -<span class="comment"># -O</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>The script can also be found on <a href="https://gist.github.com/spaghetti-/bd4fcbc6cd3a9b55b02940e78d24fdeb" target="_blank" rel="external">gist</a>.</p>
 
   </div>

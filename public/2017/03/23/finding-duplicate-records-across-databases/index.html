@@ -6,22 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Recently a BI database that was produced via an ELT showed duplicate records so
-I needed to diff the tables. A friend suggested using redis to diff the ids so
-I went with it. We need the redis-cli uti">
+    <meta name="description" content="Recently a BI database that was produced via an ELT showed duplicate records so I needed to diff the tables. A friend suggested using redis to diff the ids so I went with it. We need the redis-cli uti">
+<meta name="keywords" content="postgresql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Finding duplicate records across different databases">
 <meta property="og:url" content="http://stty.io/2017/03/23/finding-duplicate-records-across-databases/index.html">
 <meta property="og:site_name" content="stty.io">
-<meta property="og:description" content="Recently a BI database that was produced via an ELT showed duplicate records so
-I needed to diff the tables. A friend suggested using redis to diff the ids so
-I went with it. We need the redis-cli uti">
-<meta property="og:updated_time" content="2017-03-23T02:44:22.000Z">
+<meta property="og:description" content="Recently a BI database that was produced via an ELT showed duplicate records so I needed to diff the tables. A friend suggested using redis to diff the ids so I went with it. We need the redis-cli uti">
+<meta property="og:updated_time" content="2017-07-16T08:35:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Finding duplicate records across different databases">
-<meta name="twitter:description" content="Recently a BI database that was produced via an ELT showed duplicate records so
-I needed to diff the tables. A friend suggested using redis to diff the ids so
-I went with it. We need the redis-cli uti">
+<meta name="twitter:description" content="Recently a BI database that was produced via an ELT showed duplicate records so I needed to diff the tables. A friend suggested using redis to diff the ids so I went with it. We need the redis-cli uti">
     
     
         
@@ -150,7 +145,7 @@ I needed to diff the tables. A friend suggested using redis to diff the ids so
 I went with it. We need the <code>redis-cli</code> utility for this.</p>
 <p>The fun part is doing it directly from shell.</p>
 <p>Generating two sets[0]:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">psql -h proddb.rds.amazonaws.com -U normuser <span class="_">-d</span> db -c \</div><div class="line">       <span class="string">'select id from table;'</span> | tail -n +3 | ghead -n -2 \</div><div class="line">       | xargs | sed <span class="string">'s/^/sadd prod /g'</span> | redis-cli</div><div class="line"></div><div class="line">psql -h eltdb.rds.amazonaws.com -U normuser <span class="_">-d</span> db -c \</div><div class="line">       <span class="string">'select id from table;'</span> | tail -n +3 | ghead -n -2 \</div><div class="line">       | xargs | sed <span class="string">'s/^/sadd elt /g'</span> | redis-cli</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">psql -h proddb.rds.amazonaws.com -U normuser -d db -c \</div><div class="line">       <span class="string">'select id from table;'</span> | tail -n +3 | ghead -n -2 \</div><div class="line">       | xargs | sed <span class="string">'s/^/sadd prod /g'</span> | redis-cli</div><div class="line"></div><div class="line">psql -h eltdb.rds.amazonaws.com -U normuser -d db -c \</div><div class="line">       <span class="string">'select id from table;'</span> | tail -n +3 | ghead -n -2 \</div><div class="line">       | xargs | sed <span class="string">'s/^/sadd elt /g'</span> | redis-cli</div></pre></td></tr></table></figure>
 <p>I’ve found that this is reasonably fast without constructing raw redis protocol
 for inserts via <code>redis-cli --pipe</code>.</p>
 <p>Now we can generate a list of duplicate ids by doing</p>
