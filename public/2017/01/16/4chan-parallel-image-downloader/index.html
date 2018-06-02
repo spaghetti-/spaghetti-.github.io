@@ -13,7 +13,8 @@
 <meta property="og:url" content="http://stty.io/2017/01/16/4chan-parallel-image-downloader/index.html">
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored. It uses xarg">
-<meta property="og:updated_time" content="2017-07-16T08:35:50.000Z">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-25T07:06:41.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Simple shell function to download images from 4chan threads in parallel">
 <meta name="twitter:description" content="This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored. It uses xarg">
@@ -140,8 +141,8 @@
   <div class="content" itemprop="articleBody">
     <p>This is an old function that I wrote  a while back to download content from 4chan threads. It stopped working recently since they changed the link format. Fixed it up because I was bored.</p>
 <p>It uses <code>xargs</code> to dispatch downloads to threads and uses only commonly used unix tools. If we replace the <code>\d</code> regex with <code>[0-9]</code> it’ll work with plain <code>grep</code> without relying on PCRE.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">4get</span></span>() &#123;</div><div class="line">  curl -k -s <span class="variable">$1</span> | egrep -o \</div><div class="line">    <span class="string">"\/\/is\d?\.4chan\.org\/gif\/\d+\.(webm|gif|jpeg|jpg|png)"</span> | \</div><div class="line">    sed <span class="string">'s/^/https:/; s/is\d?\.4chan\.org/i\.4cdn\.org/'</span> | uniq | \</div><div class="line">    xargs -n 1 -P 12 curl -<span class="comment"># -O</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>The script can also be found on <a href="https://gist.github.com/spaghetti-/bd4fcbc6cd3a9b55b02940e78d24fdeb" target="_blank" rel="external">gist</a>.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">4get</span></span>() &#123;</span><br><span class="line">  curl -k -s <span class="variable">$1</span> | egrep -o \</span><br><span class="line">    <span class="string">"\/\/is\d?\.4chan\.org\/gif\/\d+\.(webm|gif|jpeg|jpg|png)"</span> | \</span><br><span class="line">    sed <span class="string">'s/^/https:/; s/is\d?\.4chan\.org/i\.4cdn\.org/'</span> | uniq | \</span><br><span class="line">    xargs -n 1 -P 12 curl -<span class="comment"># -O</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The script can also be found on <a href="https://gist.github.com/spaghetti-/bd4fcbc6cd3a9b55b02940e78d24fdeb" target="_blank" rel="noopener">gist</a>.</p>
 
   </div>
 </article>

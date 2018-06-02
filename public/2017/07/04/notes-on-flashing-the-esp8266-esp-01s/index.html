@@ -13,7 +13,8 @@
 <meta property="og:url" content="http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/index.html">
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="Writing this down for future reference. I used a Sparkfun FTDI breakout board with selectable voltage level set to 3.3v. Pinout 123456TXD &amp;lt;-&amp;gt; TX (I suspect wrong labelling)RXD &amp;lt;-&amp;gt; RXVCC &amp;l">
-<meta property="og:updated_time" content="2017-07-16T08:35:50.000Z">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-25T07:06:41.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Notes on flashing the ESP8266 wifi module (ESP-01S)">
 <meta name="twitter:description" content="Writing this down for future reference. I used a Sparkfun FTDI breakout board with selectable voltage level set to 3.3v. Pinout 123456TXD &amp;lt;-&amp;gt; TX (I suspect wrong labelling)RXD &amp;lt;-&amp;gt; RXVCC &amp;l">
@@ -142,24 +143,24 @@
   <div class="content" itemprop="articleBody">
     <p>Writing this down for future reference. I used a Sparkfun FTDI breakout board
 with selectable voltage level set to 3.3v. Pinout</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">TXD &lt;-&gt; TX (I suspect wrong labelling)</div><div class="line">RXD &lt;-&gt; RX</div><div class="line">VCC &lt;-&gt; 3v3</div><div class="line">GND &lt;-&gt; GND</div><div class="line">        IO0 pulled low</div><div class="line">        IO2 pulled high</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TXD &lt;-&gt; TX (I suspect wrong labelling)</span><br><span class="line">RXD &lt;-&gt; RX</span><br><span class="line">VCC &lt;-&gt; 3v3</span><br><span class="line">GND &lt;-&gt; GND</span><br><span class="line">        IO0 pulled low</span><br><span class="line">        IO2 pulled high</span><br></pre></td></tr></table></figure>
 <p>Keep the reset pin connected to a wire for easy resetting. </p>
 <p>Install <code>esptool.py</code> via <code>pip install esptool</code> and then when the ESP8266 is set
 to flash mode (IO0 low IO2 high) we can then try to connect at 115200 baud.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">esptool.py --port /dev/tty.usbmodem1421 --baud 115200 read_mac</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">esptool.py --port /dev/tty.usbmodem1421 --baud 115200 read_mac</span><br></pre></td></tr></table></figure>
 <p>I flashed v2.1.0 of the NON OS SDK which can be obtained
-<a href="https://github.com/espressif/ESP8266_NONOS_SDK/releases" target="_blank" rel="external">here</a>. </p>
+<a href="https://github.com/espressif/ESP8266_NONOS_SDK/releases" target="_blank" rel="noopener">here</a>. </p>
 <p>Flash details</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">boot_v1.7.bin @ 0x0</div><div class="line">at\512+512\user1.1024.new.2.bin @ 0x01</div><div class="line">esp_init_data_default.bin 0xfc000</div><div class="line">blank.bin @ 0xfe000 0x7e000 0xfb000 0xfb000</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">boot_v1.7.bin @ 0x0</span><br><span class="line">at\512+512\user1.1024.new.2.bin @ 0x01</span><br><span class="line">esp_init_data_default.bin 0xfc000</span><br><span class="line">blank.bin @ 0xfe000 0x7e000 0xfb000 0xfb000</span><br></pre></td></tr></table></figure>
 <p>SPI crystal frequency of 26MHz, speed 40MHz, 8Mbit flash size, QIO flash.</p>
 <p>The firmware sets default baudrate to <code>1152000</code>. This was confusing for me because I’m
 used to working with serial devices and I just assumed it was <code>115200</code> (a more
 standard baudrate). Use a serial monitor that can connect on that baudrate and
 then change the default by typing</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">AT #for testing</div><div class="line">AT+GMR #for testing</div><div class="line">AT+UART_DEF=9600,8,1,0,0</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AT #for testing</span><br><span class="line">AT+GMR #for testing</span><br><span class="line">AT+UART_DEF=9600,8,1,0,0</span><br></pre></td></tr></table></figure>
 <p>Now you can use minicom again but you have to remember to press ctrl M ctrl J to
 send CRLF like so</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AT^M^J</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT^M^J</span><br></pre></td></tr></table></figure>
 
   </div>
 </article>
