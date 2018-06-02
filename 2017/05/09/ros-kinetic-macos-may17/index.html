@@ -13,7 +13,8 @@
 <meta property="og:url" content="http://stty.io/2017/05/09/ros-kinetic-macos-may17/index.html">
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="Every now and again I nuke my ROS installation and build from scratch because of dependencies getting updated/my usecase changing. I prefer to have two installations of ROS on my system these days. Ja">
-<meta property="og:updated_time" content="2017-07-16T08:35:50.000Z">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-25T07:06:41.274Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ROS Kinetic Installation on MacOS (Homebrew, as of May &#39;17)">
 <meta name="twitter:description" content="Every now and again I nuke my ROS installation and build from scratch because of dependencies getting updated/my usecase changing. I prefer to have two installations of ROS on my system these days. Ja">
@@ -74,7 +75,7 @@
         <li><a class="icon" href="/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
         
         
-        <li><a class="icon" href="/2017/03/23/finding-duplicate-records-across-databases/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        <li><a class="icon" href="/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
         <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
@@ -146,17 +147,17 @@ installations of ROS on my system these days. Jade, for stability and feature
 matching with my platforms and Kinetic for testing and submitting patches on. I
 manage both in an <code>eselect</code>esque way (it’s a tool found on Gentoo Linux for
 managing versions via symlinks).</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /opt/kinetic</div><div class="line">sudo mkdir /opt/jade</div><div class="line">sudo chown -R `whoami`:staff /opt/kinetic /opt/jade</div><div class="line">ln -s /opt/kinetic/install /opt/ros/kinetic # or jade</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /opt/kinetic</span><br><span class="line">sudo mkdir /opt/jade</span><br><span class="line">sudo chown -R `whoami`:staff /opt/kinetic /opt/jade</span><br><span class="line">ln -s /opt/kinetic/install /opt/ros/kinetic # or jade</span><br></pre></td></tr></table></figure>
 <h2 id="OpenCV3"><a href="#OpenCV3" class="headerlink" title="OpenCV3"></a>OpenCV3</h2><p>Homebrew uses an outdated brew contrib release which does not have CMake fixes
 for the freetype contrib module. Install it with <code>--HEAD</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew install opencv3 --with-python --with-eigen --c++11 --with-contrib \</div><div class="line">  --with-ffmpeg --with-tbb --with-qt --with-non-free --without-test --HEAD</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install opencv3 --with-python --with-eigen --c++11 --with-contrib \</span><br><span class="line">  --with-ffmpeg --with-tbb --with-qt --with-non-free --without-test --HEAD</span><br></pre></td></tr></table></figure>
 <p>Note: takes around 20 minutes to compile.</p>
 <p>AFAIK, Jade still uses OpenCV2 while Kinetic has migrated to CV3. To build
 <code>cv_bridge</code> do </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew ln opencv3 --force</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew ln opencv3 --force</span><br></pre></td></tr></table></figure>
 <p>This may cause a problem with Jade stuff, so unlink and relink opencv2 if need
 be. Homebrew warns about this when you try to install opencv3.</p>
-<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo &apos;export PATH=&quot;/usr/local/opt/qt/bin:$PATH&quot;&apos; &gt;&gt; ~/.zshrc</div></pre></td></tr></table></figure>
+<h2 id="Qt"><a href="#Qt" class="headerlink" title="Qt"></a>Qt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;export PATH=&quot;/usr/local/opt/qt/bin:$PATH&quot;&apos; &gt;&gt; ~/.zshrc</span><br></pre></td></tr></table></figure>
 <p>Other than that, there were absolutely no errors involved in compiling the
 desktop version of kinetic on MacOS. Wonderful. Easiest it’s ever been really.</p>
 

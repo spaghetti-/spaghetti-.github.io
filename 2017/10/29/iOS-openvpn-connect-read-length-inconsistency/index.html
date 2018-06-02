@@ -13,7 +13,8 @@
 <meta property="og:url" content="http://stty.io/2017/10/29/iOS-openvpn-connect-read-length-inconsistency/index.html">
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="If you’ve had the same error as what’s described  here, then it just means that you have to insert the given key files inline into the configuration. The error usually gets cut off as well in portrait">
-<meta property="og:updated_time" content="2017-10-29T11:55:07.000Z">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-25T07:06:41.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS OpenVPN Connect Error - read length inconsistency">
 <meta name="twitter:description" content="If you’ve had the same error as what’s described  here, then it just means that you have to insert the given key files inline into the configuration. The error usually gets cut off as well in portrait">
@@ -141,15 +142,15 @@
 
   <div class="content" itemprop="articleBody">
     <p>If you’ve had the same error as what’s described 
-<a href="https://forums.openvpn.net/viewtopic.php?t=18197" target="_blank" rel="external">here</a>, then it just means
+<a href="https://forums.openvpn.net/viewtopic.php?t=18197" target="_blank" rel="noopener">here</a>, then it just means
 that you have to insert the given key files inline into the configuration.</p>
 <p>The error usually gets cut off as well in portrait mode so it looks like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Profile error : read length inconsistency: /var/mobile..</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Profile error : read length inconsistency: /var/mobile..</span><br></pre></td></tr></table></figure>
 <p>Usually with Tunnelblick you just bundle the <code>ca.crt</code>, <code>client.key</code> and
 <code>client.crt</code> into a folder and rename it as <code>server_name.tblk</code> but that will not
 work for OpenVPN connect.</p>
 <p>Instead do this</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#ca ca.crt</div><div class="line">&lt;ca&gt;</div><div class="line">-----BEGIN CERTIFICATE-----</div><div class="line">.</div><div class="line">.</div><div class="line">&lt;/ca&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#ca ca.crt</span><br><span class="line">&lt;ca&gt;</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">&lt;/ca&gt;</span><br></pre></td></tr></table></figure>
 <p>And so on.</p>
 
   </div>
