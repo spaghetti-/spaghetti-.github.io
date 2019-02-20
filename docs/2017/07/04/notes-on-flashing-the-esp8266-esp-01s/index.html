@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Writing this down for future reference. I used a Sparkfun FTDI breakout board with selectable voltage level set to 3.3v. Pinout 123456TXD &amp;lt;-&amp;gt; TX (I suspect wrong labelling)RXD &amp;lt;-&amp;gt; RXVCC &amp;l">
+<meta name="keywords" content="esp8266">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Notes on flashing the ESP8266 wifi module (ESP-01S)">
+<meta property="og:url" content="http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/index.html">
+<meta property="og:site_name" content="stty.io">
+<meta property="og:description" content="Writing this down for future reference. I used a Sparkfun FTDI breakout board with selectable voltage level set to 3.3v. Pinout 123456TXD &amp;lt;-&amp;gt; TX (I suspect wrong labelling)RXD &amp;lt;-&amp;gt; RXVCC &amp;l">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-25T07:06:41.273Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Notes on flashing the ESP8266 wifi module (ESP-01S)">
+<meta name="twitter:description" content="Writing this down for future reference. I used a Sparkfun FTDI breakout board with selectable voltage level set to 3.3v. Pinout 123456TXD &amp;lt;-&amp;gt; TX (I suspect wrong labelling)RXD &amp;lt;-&amp;gt; RXVCC &amp;l">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Notes on flashing the ESP8266 wifi module (ESP-01S)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+    <link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    <script src="/lib/jquery/jquery.min.js"></script>
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/29/iOS-openvpn-connect-read-length-inconsistency/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$("#i-prev").toggle();" onmouseout="$("#i-prev").toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/05/09/ros-kinetic-macos-may17/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$("#i-next").toggle();" onmouseout="$("#i-next").toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$("#i-top").toggle();" onmouseout="$("#i-top").toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$("#i-share").toggle();" onmouseout="$("#i-share").toggle();" onclick="$("#share").toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&text=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&is_video=false&description=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Notes on flashing the ESP8266 wifi module (ESP-01S)&body=Check out this article: http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&name=Notes on flashing the ESP8266 wifi module (ESP-01S)&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Notes on flashing the ESP8266 wifi module (ESP-01S)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">stty.io</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-07-03T22:10:36.000Z" itemprop="datePublished">2017-07-04</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/esp8266/">esp8266</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Writing this down for future reference. I used a Sparkfun FTDI breakout board
+with selectable voltage level set to 3.3v. Pinout</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TXD &lt;-&gt; TX (I suspect wrong labelling)</span><br><span class="line">RXD &lt;-&gt; RX</span><br><span class="line">VCC &lt;-&gt; 3v3</span><br><span class="line">GND &lt;-&gt; GND</span><br><span class="line">        IO0 pulled low</span><br><span class="line">        IO2 pulled high</span><br></pre></td></tr></table></figure>
+<p>Keep the reset pin connected to a wire for easy resetting. </p>
+<p>Install <code>esptool.py</code> via <code>pip install esptool</code> and then when the ESP8266 is set
+to flash mode (IO0 low IO2 high) we can then try to connect at 115200 baud.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">esptool.py --port /dev/tty.usbmodem1421 --baud 115200 read_mac</span><br></pre></td></tr></table></figure>
+<p>I flashed v2.1.0 of the NON OS SDK which can be obtained
+<a href="https://github.com/espressif/ESP8266_NONOS_SDK/releases" target="_blank" rel="noopener">here</a>. </p>
+<p>Flash details</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">boot_v1.7.bin @ 0x0</span><br><span class="line">at\512+512\user1.1024.new.2.bin @ 0x01</span><br><span class="line">esp_init_data_default.bin 0xfc000</span><br><span class="line">blank.bin @ 0xfe000 0x7e000 0xfb000 0xfb000</span><br></pre></td></tr></table></figure>
+<p>SPI crystal frequency of 26MHz, speed 40MHz, 8Mbit flash size, QIO flash.</p>
+<p>The firmware sets default baudrate to <code>1152000</code>. This was confusing for me because I’m
+used to working with serial devices and I just assumed it was <code>115200</code> (a more
+standard baudrate). Use a serial monitor that can connect on that baudrate and
+then change the default by typing</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AT #for testing</span><br><span class="line">AT+GMR #for testing</span><br><span class="line">AT+UART_DEF=9600,8,1,0,0</span><br></pre></td></tr></table></figure>
+<p>Now you can use minicom again but you have to remember to press ctrl M ctrl J to
+send CRLF like so</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AT^M^J</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&text=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&is_video=false&description=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Notes on flashing the ESP8266 wifi module (ESP-01S)&body=Check out this article: http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&title=Notes on flashing the ESP8266 wifi module (ESP-01S)"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://stty.io/2017/07/04/notes-on-flashing-the-esp8266-esp-01s/&name=Notes on flashing the ESP8266 wifi module (ESP-01S)&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$("#toc-footer").toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$("#share-footer").toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$("#nav-footer").toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Alex
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    <script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
