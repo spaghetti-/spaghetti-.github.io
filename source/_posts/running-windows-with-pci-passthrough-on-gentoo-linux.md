@@ -244,42 +244,12 @@ EndSection
 
 This filed is named `intel.xorg.conf` and dumped in the same directory.
 
-Then I patch the `startx` script to run whichever config is needed depending on
-if I'm going to run the VM or otherwise by looking for the presence of a
-lockfile in `/tmp`. The lockfile is set when the VM boots (the script runs) and
-deleted when we cleanup the VM. By keeping it in `/tmp` I also make sure that
-whenever my system starts it doesn't accidentally start on the i915.
+Update:
 
-To patch I first found which package `startx` belonged to
-
-```sh
-# equery belongs -e `which startx`
- * Searching for /usr/bin/startx ...
-x11-apps/xinit-1.4.0 (/usr/bin/startx)
-```
-
-and then created the directory `/etc/portage/patches/x11-apps/xinit`
-
-Then placed the patch in it as `vm.patch`
-
-```patch
---- startx.cpp  2018-03-10 09:46:03.000000000 +0800
-+++ startx.cpp  2018-07-27 15:15:21.075818476 +0800
-@@ -129,6 +129,11 @@
- enable_xauth=1
- #endif
-
-+if [ -f /tmp/vm.lock ]; then
-+    logger "vm lock file found, starting on i915"
-+    serverargs="-config intel.xorg.conf"
-+fi
-+
- XCOMM Automatically determine an unused $DISPLAY
- d=0
- while true ; do
-```
-
-Now when we emerge `xinit` or upgrade it it'll get auto patched.
+I no longer patch `xinit`. I started using a login manager: SLiM, which also
+starts a consolekit session (makes things easier). I keep the default config as
+`/etc/slim.conf.orig` and symlink either that or `/etc/slim.conf.intel` which
+has the server argument `-config xorg.conf.intel` to `/etc/slim.conf`.
 
 # Relevant scripts
 
@@ -401,43 +371,27 @@ su alex -c startx
 
 # QEMU parameters
 
-I run QEMU with the following parameters
+I'm using Qemu 3.1.0 at the time of updating this article.
 
-```sh
-export QEMU_AUDIO_DRV=alsa
-export QEMU_ALSA_DAC_SIZE_IN_USEC=0
-export QEMU_ALSA_DAC_BUFFER_SIZE=7526
-export QEMU_ALSA_DAC_PERIOD_SIZE=940
-export QEMU_ALSA_ADC_SIZE_IN_USEC=0
-export QEMU_ALSA_ADC_BUFFER_SIZE=7526
-export QEMU_ALSA_ADC_PERIOD_SIZE=940
-export QEMU_AUDIO_DAC_FIXED_SETTINGS=1
-export QEMU_AUDIO_DAC_FIXED_FREQ=44100
-export QEMU_AUDIO_DAC_FIXED_FMT=S16
-export QEMU_AUDIO_ADC_FIXED_FREQ=44100
-export QEMU_AUDIO_ADC_FIXED_FMT=S16
-export QEMU_AUDIO_DAC_TRY_POLL=0
-export QEMU_AUDIO_ADC_TRY_POLL=0
-export QEMU_AUDIO_TIMER_PERIOD=256
+
+```
+export QEMU_AUDIO_DRV=pa
 qemu-system-x86_64 -enable-kvm -m 8G \
-    -cpu host,kvm=off,hv_relaxed,hv_spinlocks=0x1fff,hv_time,hv_vapic,hv_vendor_id=0xDEADBEEFFF \
-    -rtc clock=host,base=localtime \
-    -smp 4,sockets=1,cores=2,threads=2 \
-    -device vfio-pci,host=01:00.0,multifunction=on,x-vga=on \
-    -device vfio-pci,host=01:00.1 \
-    -drive if=pflash,format=raw,file=/usr/share/edk2-ovmf/OVMF_CODE.fd \
-    -drive media=cdrom,file=win10.iso,id=virtiocd1,if=none \
-    -device ide-cd,bus=ide.1,drive=virtiocd1 \
-    -soundhw ac97 \
-    -vga none \
-    -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-04d9_USB-HID_Keyboard-event-kbd,grab_all=on,repeat=on \
-    -object input-linux,id=mouse,evdev=/dev/input/by-id/usb-Logitech_G102_Prodigy_Gaming_Mouse_017F36743435-event-mouse \
-    -object input-linux,id=kbd2,evdev=/dev/input/by-id/usb-Logitech_G102_Prodigy_Gaming_Mouse_017F36743435-if01-event-kbd,grab_all=on,repeat=on \
-    -drive id=rootfs,file=windoze2,id=disk,format=qcow2,if=none \
-    -device virtio-scsi-pci,id=scsi0 \
-    -device scsi-hd,bus=scsi0.0,drive=rootfs \
-    -drive id=gamesfs,file=/media/VMSTORE/games.img,id=disk,format=qcow2,if=none \
-    -device scsi-hd,bus=scsi0.0,drive=gamesfs \
-    -boot order=dc \
-    -drive media=cdrom,file=/usr/share/drivers/windows/virtio-win-0.1.141.iso
+  -machine pc-q35-3.0,accel=kvm \
+  -cpu host,kvm=off,hv_relaxed,hv_spinlocks=0x1fff,hv_time,hv_vapic,hv_vendor_id=0xDEADBEEFFF \
+  -rtc clock=host,base=localtime \
+  -smp 4,sockets=1,cores=2,threads=2 \
+  -vga none \
+  -soundhw ac97 \
+  -device vfio-pci,host=01:00.0,multifunction=on,x-vga=on \
+  -device vfio-pci,host=01:00.1 \
+  -drive if=pflash,format=raw,file=/usr/share/edk2-ovmf/OVMF_CODE.fd \
+  -device ide-cd,bus=ide.1,drive=virtiocd1 \
+  -drive media=cdrom,file=/tank/vm/win10.iso,id=virtiocd1,if=none \
+  -object input-linux,id=kbd,evdev=/dev/input/by-id/usb-04d9_USB-HID_Keyboard-event-kbd,grab_all=on,repeat=on \
+  -object input-linux,id=mouse,evdev=/dev/input/by-id/usb-Logitech_G102_Prodigy_Gaming_Mouse_017F36743435-event-mouse \
+  -object input-linux,id=kbd2,evdev=/dev/input/by-id/usb-Logitech_G102_Prodigy_Gaming_Mouse_017F36743435-if01-event-kbd,grab_all=on,repeat=on \
+  -device virtio-scsi-pci,id=scsi0 \
+  -device scsi-hd,bus=scsi0.0,drive=rootfs \
+  -drive id=rootfs,file=/tank/vm/photog.qcow2,id=disk,format=qcow2,if=none \
 ```
