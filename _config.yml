@@ -6,8 +6,16 @@
 title: stty.io
 subtitle:
 description: >
-  I used to be an  undergrad student working on autonomous boats and underwater vehicles,
+  I work as a Site Reliability Engineer and I work on production systems that serve hundreds of millions of people.
+
+  While in my undergrad, I used to work on autonomous boats and underwater vehicles,
   particularly in mission planning, guidance, navigation and control.
+
+
+  A short list of things that interest me at the moment:
+
+    * Rust, the programming language
+    * Containers (with Kubernetes), and moving my personal infrastructure from jails
 
 
   alex (at) stty.io
@@ -20,7 +28,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://stty.io
+url: https://stty.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
