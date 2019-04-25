@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="Why? I have a 1080 GTX that I use to power my 2 1440p screens, render high definition video, re-encoding and also to play Dota 2 on Linux. I also foresee the card running CUDA specific stuff just out">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-18T09:11:02.227Z">
+<meta property="og:updated_time" content="2019-03-18T11:18:23.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Running Windows with PCI passthrough enabled on Gentoo Linux">
 <meta name="twitter:description" content="Why? I have a 1080 GTX that I use to power my 2 1440p screens, render high definition video, re-encoding and also to play Dota 2 on Linux. I also foresee the card running CUDA specific stuff just out">
@@ -221,9 +221,9 @@ like so</p>
 <p>I removed the DP chaining because if you’re (and you should be) using the nvidia
 proprietary drivers on Linux, there’s a bug preventing DDC control from working
 over DP.</p>
-<p>DDC control enables us to switch the inputs of the monitors from mDP &lt;-&gt; DP from
+<p>DDC control enables us to switch the inputs of the monitors from mDP <-> DP from
 software (i2c write). It works fine with the intel GPU which works out well for
-us since that’s the display that’ll be running X when we’re in passthrough.</p>
+us since that’s the display that’ll be running X when we’re in passthrough.</-></p>
 <p>There’s a nice little utility called <code>ddccontrol</code> that enables us to use this.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">=app-misc/ddccontrol-db-20061014_p20121105 ~amd64</span><br><span class="line">=app-misc/ddccontrol-0.4.2_p20140105-r2 ~amd64</span><br><span class="line"></span><br><span class="line">emerge -a ddccontrol</span><br></pre></td></tr></table></figure>
 <h1 id="IOMMU-Groups"><a href="#IOMMU-Groups" class="headerlink" title="IOMMU Groups"></a>IOMMU Groups</h1><p>And IOMMU group is the smallest set of devices the VM can grab at a time.</p>
