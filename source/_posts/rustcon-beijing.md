@@ -7,8 +7,7 @@ tags:
 ---
 
 I recently attended [Rustcon Asia 2019](https://rustcon.asia) in Beijing, China
-and these are my thoughts on the experience as a whole from the point of view of
-a
+and these are my thoughts on the experience from the point of view of a
 
 * newbie to Rust
 * non Chinese speaker
@@ -26,8 +25,8 @@ Majority of the talks were in Chinese but it was very follow-able for a non
 Chinese speaker because of the live translation. The live translation does of
 course lose a lot of the tone and humor, but it got the job done. When the
 speakers were using slides in Chinese, it was *very very* hard to follow along
-even with the translation. I'd like to have been provided with an
-English copy of the slides that I can refer to, at the very least.
+even with the translation. At the very least, I'd like to have received an
+English copy of the slides that I can refer to.
 
 I appreciated the helpful and kind nature of everyone at the conference and it
 was very welcoming. A small improvement that I'd like to suggest for future
@@ -124,7 +123,7 @@ Addition stuff that I'd have liked from the talk
 
 I wasn't too impressed with the talk about _how to learn rust efficiently_
 because it was more about learning than it was about learning Rust. I suppose
-just a mistmatch on expectations and style of learning.
+just a mismatch on expectations and style of learning.
 
 ## Workshops
 
