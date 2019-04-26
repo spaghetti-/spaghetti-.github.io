@@ -28,9 +28,9 @@ speakers were using slides in Chinese, it was *very very* hard to follow along
 even with the translation. At the very least, I'd like to have received an
 English copy of the slides that I can refer to.
 
-I appreciated the helpful and kind nature of everyone at the conference and it
-was very welcoming. A small improvement that I'd like to suggest for future
-organizers is to start maybe an hour later (10 AM local time) and to provide
+I appreciated the helpful and kind nature of everyone at the conference. It felt
+welcoming. A small improvement that I'd like to suggest for future organizers is
+to start maybe an hour later (10 AM local time) and to provide
 coffee at the venue!
 
 ## Rust
@@ -55,7 +55,7 @@ fellow Rust developers, I left for Beijing.
 The conference had talks for two days which began at 8 AM (first talk being at
 9 AM) which is kinda *really* early. Nick Cameron's talk on making rust
 ergonomic gave an insight to what the core team thinks and was a great starter
-talk. Some of the other talks that I found really interesting was
+talk. Some of the other talks that I found interesting were
 
 ### Implementing a secp256k1 library in pure Rust
 
@@ -66,7 +66,7 @@ concepts in the language.
 
 ### How Rust taught me to think about systems
 
-Entertaining - makes you think back to when you were struggling with the borrow
+Entertaining - made you think back to when you were struggling with the borrow
 checker (not that I'm not right now but to a lesser degree) and the language in
 general. For the new-er folks, the speakers adventures give a solid start on how
 to reference library files, check for types and trace lifetimes.
@@ -128,5 +128,5 @@ just a mismatch on expectations and style of learning.
 ## Workshops
 
 I did not attend the workshops because I had to get an expensive visa to enter
-China and the time was better spent exploring the wonderful city of Beijing and
+China. The time was better spent exploring the wonderful city of Beijing and
 its delicious food.
