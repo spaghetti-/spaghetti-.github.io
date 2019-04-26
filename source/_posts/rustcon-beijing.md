@@ -20,16 +20,17 @@ workplaces and the kind of workloads it was being put through. Custom derives
 and higher order concepts that I am not familiar with were broken in (just on
 the top).
 
-Majority of the talks were in Chinese but it was very followable for a non
+Majority of the talks were in Chinese but it was very follow-able for a non
 Chinese speaker because of the live translation. The live translation does of
-course lose the tone and humor conveyed, but it got the job done. When the
+course lose a lot of the tone and humor, but it got the job done. When the
 speakers were using slides in Chinese, it was *very very* hard to follow along
 even with the translation. I'd like to have been provided with an
 English copy of the slides that I can refer to, at the very least.
 
 I appreciated the helpful and kind nature of everyone at the conference and it
 was very welcoming. A small improvement that I'd like to suggest for future
-organizers is to start maybe an hour later and to provide coffee at the venue!
+organizers is to start maybe an hour later (10 AM local time) and to provide
+coffee at the venue!
 
 ## Rust
 
@@ -125,6 +126,6 @@ just a mistmatch on expectations and style of learning.
 
 ## Workshops
 
-I did not attend the workshops because I need an expensive visa to enter China
-and the time was better spent exploring the wonderful city of Beijing and its
-delicious food.
+I did not attend the workshops because I had to get an expensive visa to enter
+China and the time was better spent exploring the wonderful city of Beijing and
+its delicious food.
