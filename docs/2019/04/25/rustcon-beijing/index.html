@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="I recently attended Rustcon Asia 2019 in Beijing, China and these are my thoughts on the experience as a whole from the point of view of a  newbie to Rust non Chinese speaker  the latter of which is n">
+<meta name="keywords" content="rust,conference">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rustcon Asia 2019 - Beijing">
+<meta property="og:url" content="http://stty.io/2019/04/25/rustcon-beijing/index.html">
+<meta property="og:site_name" content="stty.io">
+<meta property="og:description" content="I recently attended Rustcon Asia 2019 in Beijing, China and these are my thoughts on the experience as a whole from the point of view of a  newbie to Rust non Chinese speaker  the latter of which is n">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-26T06:54:56.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rustcon Asia 2019 - Beijing">
+<meta name="twitter:description" content="I recently attended Rustcon Asia 2019 in Beijing, China and these are my thoughts on the experience as a whole from the point of view of a  newbie to Rust non Chinese speaker  the latter of which is n">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Rustcon Asia 2019 - Beijing</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2018/07/27/running-windows-with-pci-passthrough-on-gentoo-linux/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://stty.io/2019/04/25/rustcon-beijing/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://stty.io/2019/04/25/rustcon-beijing/&text=Rustcon Asia 2019 - Beijing"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://stty.io/2019/04/25/rustcon-beijing/&is_video=false&description=Rustcon Asia 2019 - Beijing"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rustcon Asia 2019 - Beijing&body=Check out this article: http://stty.io/2019/04/25/rustcon-beijing/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://stty.io/2019/04/25/rustcon-beijing/&name=Rustcon Asia 2019 - Beijing&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#TL-DR-Summary"><span class="toc-number">1.</span> <span class="toc-text">TL;DR/Summary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust"><span class="toc-number">2.</span> <span class="toc-text">Rust</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conference"><span class="toc-number">3.</span> <span class="toc-text">Conference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Implementing-a-secp256k1-library-in-pure-Rust"><span class="toc-number">3.1.</span> <span class="toc-text">Implementing a secp256k1 library in pure Rust</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-Rust-taught-me-to-think-about-systems"><span class="toc-number">3.2.</span> <span class="toc-text">How Rust taught me to think about systems</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improving-web-app-with-Rust-and-WASM"><span class="toc-number">3.3.</span> <span class="toc-text">Improving web app with Rust and WASM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cargo-meets-Autotools"><span class="toc-number">3.4.</span> <span class="toc-text">Cargo meets Autotools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distributed-Actor-System-in-Rust"><span class="toc-number">3.5.</span> <span class="toc-text">Distributed Actor System in Rust</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Be-Fearless-Using-Rust-in-Production"><span class="toc-number">3.6.</span> <span class="toc-text">Be Fearless Using Rust in Production</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Misc"><span class="toc-number">3.7.</span> <span class="toc-text">Misc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Workshops"><span class="toc-number">4.</span> <span class="toc-text">Workshops</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Rustcon Asia 2019 - Beijing
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">stty.io</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-25T08:01:13.000Z" itemprop="datePublished">2019-04-25</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/conference/">conference</a>, <a class="tag-link" href="/tags/rust/">rust</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>I recently attended <a href="https://rustcon.asia" target="_blank" rel="noopener">Rustcon Asia 2019</a> in Beijing, China
+and these are my thoughts on the experience as a whole from the point of view of
+a</p>
+<ul>
+<li>newbie to Rust</li>
+<li>non Chinese speaker</li>
+</ul>
+<p>the latter of which is not really important.</p>
+<h2 id="TL-DR-Summary"><a href="#TL-DR-Summary" class="headerlink" title="TL;DR/Summary"></a>TL;DR/Summary</h2><p>The conference was a great opportunity to learn more about Rust in the
+workplaces and the kind of workloads it was being put through. Custom derives
+and higher order concepts that I am not familiar with were broken in (just on
+the top).</p>
+<p>Majority of the talks were in Chinese but it was very follow-able for a non
+Chinese speaker because of the live translation. The live translation does of
+course lose a lot of the tone and humor, but it got the job done. When the
+speakers were using slides in Chinese, it was <em>very very</em> hard to follow along
+even with the translation. I’d like to have been provided with an
+English copy of the slides that I can refer to, at the very least.</p>
+<p>I appreciated the helpful and kind nature of everyone at the conference and it
+was very welcoming. A small improvement that I’d like to suggest for future
+organizers is to start maybe an hour later (10 AM local time) and to provide
+coffee at the venue!</p>
+<h2 id="Rust"><a href="#Rust" class="headerlink" title="Rust"></a>Rust</h2><p>I’m new to Rust but I come from a C++ and Python and (naively) Haskell
+background which makes the language sufficiently interesting to follow. It
+combines some of the best features that I like, is a statically typed, compiled
+language that <em>I</em> can grok in my head. I am highlighting it because there are
+easier to grok languages that I can’t get my head around because it’s different
+from the <em>way I think</em>.</p>
+<p>I also come from a Robotics background doing underwater and surface robotics,
+which is an area in which C++ is king. Rust can (and should) be the default
+choice for the safety it provides (critical when working around people and
+expensive installations such as oil and gas pipelines) and performance.</p>
+<p>Armed with my curiosity and interest to learn more applications and ideas from
+fellow Rust developers, I left for Beijing.</p>
+<h2 id="Conference"><a href="#Conference" class="headerlink" title="Conference"></a>Conference</h2><p>The conference had talks for two days which began at 8 AM (first talk being at
+9 AM) which is kinda <em>really</em> early. Nick Cameron’s talk on making rust
+ergonomic gave an insight to what the core team thinks and was a great starter
+talk. Some of the other talks that I found really interesting was</p>
+<h3 id="Implementing-a-secp256k1-library-in-pure-Rust"><a href="#Implementing-a-secp256k1-library-in-pure-Rust" class="headerlink" title="Implementing a secp256k1 library in pure Rust"></a>Implementing a secp256k1 library in pure Rust</h3><p>Which gave an introduction to elliptic curves: in math, and then in Rust. Math
+being an universal language gives the audience a way to relate quickly to what’s
+happening in the Rust code even if you’re not familiar with the higher level
+concepts in the language.</p>
+<h3 id="How-Rust-taught-me-to-think-about-systems"><a href="#How-Rust-taught-me-to-think-about-systems" class="headerlink" title="How Rust taught me to think about systems"></a>How Rust taught me to think about systems</h3><p>Entertaining - makes you think back to when you were struggling with the borrow
+checker (not that I’m not right now but to a lesser degree) and the language in
+general. For the new-er folks, the speakers adventures give a solid start on how
+to reference library files, check for types and trace lifetimes.</p>
+<h3 id="Improving-web-app-with-Rust-and-WASM"><a href="#Improving-web-app-with-Rust-and-WASM" class="headerlink" title="Improving web app with Rust and WASM"></a>Improving web app with Rust and WASM</h3><p>An introduction to plugging in Rust compiled down to WASM for web developers and
+a case study in which it was immediately useful to a client. The speaker used
+wasm to program a real time renderer for dentists to showcase teeth
+modifications based on parameters provided from the JS layer.</p>
+<p>The talk could have been improved a bit by providing absolute reference times
+when comparing performance across JS and WASM and by providing a debugging
+methodology.</p>
+<h3 id="Cargo-meets-Autotools"><a href="#Cargo-meets-Autotools" class="headerlink" title="Cargo meets Autotools"></a>Cargo meets Autotools</h3><p>I’m interested in build systems and package managers and I’m opinionated about
+them. I use portage as a daily driver and I’m familiar with CMake and autotools.
+Having autotools is a godsend for deployments that don’t need cargo installed
+(not distributed by default by distributions amongst other issues) and so is
+CMake. There are folks who are about to distribute libraries with deb and rpm.</p>
+<p>Some specifics about LTO, and differences mentioned in the talk between the
+final product with autotools vs CMake was not very clear to me though.</p>
+<h3 id="Distributed-Actor-System-in-Rust"><a href="#Distributed-Actor-System-in-Rust" class="headerlink" title="Distributed Actor System in Rust"></a>Distributed Actor System in Rust</h3><p>A very well done talk with a real world use case that I’m tackling as well. A
+distributed actor system that’s not Akka and is build in-house by Alibaba for
+their use case. Preserving types when sending messages and ensuring consistency
+when compiling and rolling out were some of the topics that was talked
+about. The speaker was eloquent (even to a non Chinese speaker) and the talk was
+understandable even to a newbie. Awesome!</p>
+<h3 id="Be-Fearless-Using-Rust-in-Production"><a href="#Be-Fearless-Using-Rust-in-Production" class="headerlink" title="Be Fearless Using Rust in Production"></a>Be Fearless Using Rust in Production</h3><p>A talk about using Rust to replace an in house image stitcher from NodeJS. The
+slides gave a clear idea of the kind of workload that was implemented and it’s
+something that I myself will first prototype in ImageMagick and then dump on C++
+(OpenCV3). Using Rust seemed to have paid off, with impressive QPS being handled
+by the same set of servers.</p>
+<p>The talk also spoke about how difficult it was to get the company to approve
+using Rust (at all) but they came around after an engineer used his own time to
+prototype the solution.</p>
+<p>Addition stuff that I’d have liked from the talk</p>
+<ul>
+<li>Rust bindings for OpenCV</li>
+<li>Benchmarks with an implementation in C++</li>
+</ul>
+<h3 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h3><p>I wasn’t too impressed with the talk about <em>how to learn rust efficiently</em>
+because it was more about learning than it was about learning Rust. I suppose
+just a mistmatch on expectations and style of learning.</p>
+<h2 id="Workshops"><a href="#Workshops" class="headerlink" title="Workshops"></a>Workshops</h2><p>I did not attend the workshops because I had to get an expensive visa to enter
+China and the time was better spent exploring the wonderful city of Beijing and
+its delicious food.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#TL-DR-Summary"><span class="toc-number">1.</span> <span class="toc-text">TL;DR/Summary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust"><span class="toc-number">2.</span> <span class="toc-text">Rust</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conference"><span class="toc-number">3.</span> <span class="toc-text">Conference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Implementing-a-secp256k1-library-in-pure-Rust"><span class="toc-number">3.1.</span> <span class="toc-text">Implementing a secp256k1 library in pure Rust</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-Rust-taught-me-to-think-about-systems"><span class="toc-number">3.2.</span> <span class="toc-text">How Rust taught me to think about systems</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improving-web-app-with-Rust-and-WASM"><span class="toc-number">3.3.</span> <span class="toc-text">Improving web app with Rust and WASM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cargo-meets-Autotools"><span class="toc-number">3.4.</span> <span class="toc-text">Cargo meets Autotools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distributed-Actor-System-in-Rust"><span class="toc-number">3.5.</span> <span class="toc-text">Distributed Actor System in Rust</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Be-Fearless-Using-Rust-in-Production"><span class="toc-number">3.6.</span> <span class="toc-text">Be Fearless Using Rust in Production</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Misc"><span class="toc-number">3.7.</span> <span class="toc-text">Misc</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Workshops"><span class="toc-number">4.</span> <span class="toc-text">Workshops</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://stty.io/2019/04/25/rustcon-beijing/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://stty.io/2019/04/25/rustcon-beijing/&text=Rustcon Asia 2019 - Beijing"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://stty.io/2019/04/25/rustcon-beijing/&is_video=false&description=Rustcon Asia 2019 - Beijing"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Rustcon Asia 2019 - Beijing&body=Check out this article: http://stty.io/2019/04/25/rustcon-beijing/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://stty.io/2019/04/25/rustcon-beijing/&title=Rustcon Asia 2019 - Beijing"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://stty.io/2019/04/25/rustcon-beijing/&name=Rustcon Asia 2019 - Beijing&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Alex
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

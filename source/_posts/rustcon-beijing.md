@@ -2,6 +2,8 @@
 title: Rustcon Asia 2019 - Beijing
 date: 2019-04-25 16:01:13
 tags:
+ - rust
+ - conference
 ---
 
 I recently attended [Rustcon Asia 2019](https://rustcon.asia) in Beijing, China
