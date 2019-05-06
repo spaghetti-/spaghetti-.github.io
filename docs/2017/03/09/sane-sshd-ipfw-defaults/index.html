@@ -10,7 +10,7 @@
 <meta name="keywords" content="freebsd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bootstrap sane defaults for sshd and ipfw">
-<meta property="og:url" content="http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/index.html">
+<meta property="og:url" content="https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/index.html">
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="I often find myself spawning random DigitalOcean FreeBSD droplets for prototyping web services. Just because they are temporary does not mean that they should not have secure defaults however. Here’s">
 <meta property="og:locale" content="default">
@@ -88,16 +88,16 @@
     <br>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&text=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&is_video=false&description=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Bootstrap sane defaults for sshd and ipfw&body=Check out this article: http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&name=Bootstrap sane defaults for sshd and ipfw&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&text=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&is_video=false&description=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Bootstrap sane defaults for sshd and ipfw&body=Check out this article: https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&name=Bootstrap sane defaults for sshd and ipfw&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -191,16 +191,16 @@ tcp in on port 22 by default. </p>
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&text=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&is_video=false&description=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Bootstrap sane defaults for sshd and ipfw&body=Check out this article: http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&name=Bootstrap sane defaults for sshd and ipfw&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&text=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&is_video=false&description=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Bootstrap sane defaults for sshd and ipfw&body=Check out this article: https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&name=Bootstrap sane defaults for sshd and ipfw&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
