@@ -23,11 +23,13 @@ s -hppa -i386 -m68k -microblaze -microblazeel -mips -mips64 -mips64el -mipsel -m
 ```
 ## Machine Type
 
-To integrate a few audio patches I upgraded the machine type from 3.0 to 4.0
+To integrate a few audio patches I upgraded the machine type from 3.0 to 4.0.
+Turns out when you upgrade the machine type you also need `kernel_irqchip=on` or
+the nvidia driver wont work.
 
 ```
 -  -machine pc-q35-3.0,accel=kvm \
-+  -machine pc-q35-4.0,accel=kvm \
++  -machine pc-q35-4.0,kernel_irqchip=on,accel=kvm \
 ```
 
 ## Audio dev
