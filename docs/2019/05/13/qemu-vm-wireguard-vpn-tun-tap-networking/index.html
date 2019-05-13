@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
+<meta name="keywords" content="passthrough,networking,qemu,vpn,wireguard">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Setting up TUN&#x2F;TAP networking for QEMU VM&#39;s (and bonus wireguard)">
+<meta property="og:url" content="https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/index.html">
+<meta property="og:site_name" content="stty.io">
+<meta property="og:description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-13T10:41:13.188Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Setting up TUN&#x2F;TAP networking for QEMU VM&#39;s (and bonus wireguard)">
+<meta name="twitter:description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/05/05/audio-changes-qemu-4-0-ac97-passthrough/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&text=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&is_video=false&description=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)&body=Check out this article: https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&name=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Setup"><span class="toc-number">1.</span> <span class="toc-text">Network Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Diagram"><span class="toc-number">1.1.</span> <span class="toc-text">Diagram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wireguard"><span class="toc-number">1.2.</span> <span class="toc-text">Wireguard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bridge-and-TUN-devices"><span class="toc-number">1.3.</span> <span class="toc-text">Bridge and TUN devices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QEMU-Parameters"><span class="toc-number">1.4.</span> <span class="toc-text">QEMU Parameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Routing-and-Internet-Connectivity"><span class="toc-number">1.5.</span> <span class="toc-text">Routing and Internet Connectivity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thanks-to"><span class="toc-number">2.</span> <span class="toc-text">Thanks to</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">stty.io</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-05-13T09:44:18.000Z" itemprop="datePublished">2019-05-13</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/networking/">networking</a>, <a class="tag-link" href="/tags/passthrough/">passthrough</a>, <a class="tag-link" href="/tags/qemu/">qemu</a>, <a class="tag-link" href="/tags/vpn/">vpn</a>, <a class="tag-link" href="/tags/wireguard/">wireguard</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>I had a need to setup a VM that had to <em>only</em> have connectivity through a
+specific wireguard endpoint. The VM was using user mode networking earlier
+(SLiRP) which required no setup. I asked around on IRC and was told that
+libvirt takes care of that stuff for you so most folks don’t care - but I
+already have a few VM’s and am not ready for black magic or XML. I will
+eventually have to move them, I suppose. Windows VMs don’t take kindly to even
+the slightest of parameter changes, so if there’s a tool that takes the
+commandline flags and generates the XML, that’d be awesome.</p>
+<p>If you really require SLiRP networking (user mode) to work and want to route
+through wireguard, you could consider using network namespaces to achieve the
+same result. I like the flexibility offered by the TAP setup that lets my host
+and LAN devices interfact with the VM in a much more <em>normal</em> way (subjective).</p>
+<h2 id="Network-Setup"><a href="#Network-Setup" class="headerlink" title="Network Setup"></a>Network Setup</h2><h3 id="Diagram"><a href="#Diagram" class="headerlink" title="Diagram"></a>Diagram</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">     bridge masters</span><br><span class="line"></span><br><span class="line">  +--------+   +--------+</span><br><span class="line">  | vm0    |   |  vm1   |</span><br><span class="line">  +---+----+   +---+----+</span><br><span class="line">      |            |</span><br><span class="line">+-----+------------+-----+   +-------------+   +----------+</span><br><span class="line">|         br0            |   |     wg0     |   |   eth0   |</span><br><span class="line">|     10.0.3.0/24        |   | 10.0.0.1/24 |   |          |</span><br><span class="line">+------------------------+   +-------------+   +----------+</span><br></pre></td></tr></table></figure>
+<p><code>vm0</code> and <code>vm1</code> are TUN devices.</p>
+<p>Caveat: Not all traffic in the host is routed through the wireguard interface so
+we need some <code>ip -4 rule</code> usage to route.</p>
+<h3 id="Wireguard"><a href="#Wireguard" class="headerlink" title="Wireguard"></a>Wireguard</h3><p>This is the most straightforward so let’s get it out of the way. You need the
+kernel module loaded.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># modprobe wireguard</span></span><br><span class="line">ip link add dev wg0 <span class="built_in">type</span> wireguard</span><br><span class="line">ip addr add 10.0.0.2/24 dev wg0</span><br><span class="line">wg <span class="built_in">set</span> wg0 private-key</span><br><span class="line">wg <span class="built_in">set</span> wg0 peer PUBLIC_KEY_HERE allowed-ips 0.0.0.0/0 endpoint stty.io:port</span><br><span class="line">ip link <span class="built_in">set</span> up dev wg0</span><br></pre></td></tr></table></figure>
+<p>And on the “server” do the same, but with some modifications</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wg <span class="built_in">set</span> wg0 peer PUBLIC_KEY_HERE allowed-ips 10.0.0.2/32, 10.0.3.0/24</span><br><span class="line">iptables -A FORWARD -i wg0 -j ACCEPT</span><br><span class="line">iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<p>Notice how we’ve allowed the bridge’s ip range in allowed-ips. Bridge setup
+time:</p>
+<h3 id="Bridge-and-TUN-devices"><a href="#Bridge-and-TUN-devices" class="headerlink" title="Bridge and TUN devices"></a>Bridge and TUN devices</h3><p>If you need to run qemu without requiring root user, setup a group <code>netdev</code> and
+add yourself to it. Logout and login to take effect. <code>id</code> must report that your
+user is in <code>netdev</code> before you proceed. Also create a new udev rule</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KERNEL==&quot;tun&quot;, GROUP=&quot;netdev&quot;, MODE=&quot;0660&quot;, OPTIONS+=&quot;static_node=net/tun&quot;</span><br></pre></td></tr></table></figure>
+<p>to configure your TUN devices to use the group. I put mine in
+<code>/etc/udev/rules.d/10-qemu.rules</code> along with some other stuff for passthrough.</p>
+<p>Your kernel needs “Universal TUN/TAP devices” enabled.</p>
+<p>For the bridge:
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip link add br0 <span class="built_in">type</span> bridge</span><br><span class="line">ip addr add 10.0.3.0/24 dev br0</span><br><span class="line">ip link <span class="built_in">set</span> up dev br0</span><br></pre></td></tr></table></figure></p>
+<p>For a DHCP server we can use <code>dnsmasq</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnsmasq --interface=br0 --<span class="built_in">bind</span>-interfaces --dhcp-range=10.0.3.0,10.0.3.255</span><br></pre></td></tr></table></figure>
+<p>For the VM’s adapters</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ip tuntap add vm0 mode tap group netdev</span><br><span class="line">ip link <span class="built_in">set</span> vm0 up</span><br><span class="line">ip link <span class="built_in">set</span> vm0 master br0</span><br></pre></td></tr></table></figure>
+<h3 id="QEMU-Parameters"><a href="#QEMU-Parameters" class="headerlink" title="QEMU Parameters"></a>QEMU Parameters</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-device virtio-net-pci,netdev=vm0 \</span><br><span class="line">-netdev tap,id=vm0,ifname=vm0,script=no \</span><br></pre></td></tr></table></figure>
+<p>Important points</p>
+<ul>
+<li>instead of <code>virtio-net-pci</code> you can use anything else like <code>e1000</code> which has
+inbuilt drivers in windows. I installed it manually from the driver disk
+provided by Red Hat.</li>
+<li><code>script=no</code> is important, else QEMU tries to init a new adapter itself and
+that required superuser</li>
+<li>if <code>ifname=vm0</code> is not provided <code>script=</code> doesn’t work because qemu doesn’t
+know which adapter to configure and it’ll try to run anyway.</li>
+</ul>
+<p>You’ll get an error saying qemu can’t configure the device which looks
+suspiciously like you didn’t setup your permissions correctly, but it’s not.</p>
+<p>At this point your VM should boot and the network adapter should recieve an IP
+address from dnsmasq.</p>
+<h3 id="Routing-and-Internet-Connectivity"><a href="#Routing-and-Internet-Connectivity" class="headerlink" title="Routing and Internet Connectivity"></a>Routing and Internet Connectivity</h3><p>Like I mentioned before, the host does not have a default route through the
+wireguard endpoint. We only want traffic from the bridge, or even, specific VMs
+to go through the endpoint.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip route add default via 10.0.0.1 dev wg0 priority 1 table 1</span><br><span class="line">ip rule add from 10.0.3.0/24 priority 1 lookup 1</span><br></pre></td></tr></table></figure>
+<p>This should be sufficient to do policy based routing from the VM to the internet
+and to the host. You should verify this by pinging from within the VM and from
+the host.</p>
+<h2 id="Thanks-to"><a href="#Thanks-to" class="headerlink" title="Thanks to"></a>Thanks to</h2><p>Documentation found on the <a href="https://www.linux-kvm.org/page/Networking" target="_blank" rel="noopener">kvm website</a>
+and IRC users grawity, tds and others.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Setup"><span class="toc-number">1.</span> <span class="toc-text">Network Setup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Diagram"><span class="toc-number">1.1.</span> <span class="toc-text">Diagram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wireguard"><span class="toc-number">1.2.</span> <span class="toc-text">Wireguard</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bridge-and-TUN-devices"><span class="toc-number">1.3.</span> <span class="toc-text">Bridge and TUN devices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QEMU-Parameters"><span class="toc-number">1.4.</span> <span class="toc-text">QEMU Parameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Routing-and-Internet-Connectivity"><span class="toc-number">1.5.</span> <span class="toc-text">Routing and Internet Connectivity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thanks-to"><span class="toc-number">2.</span> <span class="toc-text">Thanks to</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&text=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&is_video=false&description=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)&body=Check out this article: https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&title=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/&name=Setting up TUN/TAP networking for QEMU VM&#39;s (and bonus wireguard)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Alex
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
