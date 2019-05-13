@@ -66,6 +66,12 @@ iptables -A FORWARD -i wg0 -j ACCEPT
 iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 ```
 
+You'd also need to enable IP forwarding
+
+```sh
+sudo sysctl -w net.ipv4.ip_forward=1
+```
+
 Notice how we've allowed the bridge's ip range in allowed-ips. Bridge setup
 time:
 

@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-13T10:41:13.188Z">
+<meta property="og:updated_time" content="2019-05-13T10:44:49.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Setting up TUN&#x2F;TAP networking for QEMU VM&#39;s (and bonus wireguard)">
 <meta name="twitter:description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
@@ -165,6 +165,8 @@ kernel module loaded.</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># modprobe wireguard</span></span><br><span class="line">ip link add dev wg0 <span class="built_in">type</span> wireguard</span><br><span class="line">ip addr add 10.0.0.2/24 dev wg0</span><br><span class="line">wg <span class="built_in">set</span> wg0 private-key</span><br><span class="line">wg <span class="built_in">set</span> wg0 peer PUBLIC_KEY_HERE allowed-ips 0.0.0.0/0 endpoint stty.io:port</span><br><span class="line">ip link <span class="built_in">set</span> up dev wg0</span><br></pre></td></tr></table></figure>
 <p>And on the “server” do the same, but with some modifications</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wg <span class="built_in">set</span> wg0 peer PUBLIC_KEY_HERE allowed-ips 10.0.0.2/32, 10.0.3.0/24</span><br><span class="line">iptables -A FORWARD -i wg0 -j ACCEPT</span><br><span class="line">iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<p>You’d also need to enable IP forwarding</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sysctl -w net.ipv4.ip_forward=1</span><br></pre></td></tr></table></figure>
 <p>Notice how we’ve allowed the bridge’s ip range in allowed-ips. Bridge setup
 time:</p>
 <h3 id="Bridge-and-TUN-devices"><a href="#Bridge-and-TUN-devices" class="headerlink" title="Bridge and TUN devices"></a>Bridge and TUN devices</h3><p>If you need to run qemu without requiring root user, setup a group <code>netdev</code> and
