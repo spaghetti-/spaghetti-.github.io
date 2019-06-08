@@ -9,8 +9,8 @@ tags:
   - networking
 ---
 
-I had a need to setup a VM that had to _only_ have connectivity through a
-specific wireguard endpoint. The VM was using user mode networking earlier
+I needed to setup a VM that could _only_ have connectivity through a
+specific wireguard endpoint. Previoiusly, the VM was using user mode networking
 (SLiRP) which required no setup. I asked around on IRC and was told that
 libvirt takes care of that stuff for you so most folks don't care - but I
 already have a few VM's and am not ready for black magic or XML. I will
@@ -18,7 +18,7 @@ eventually have to move them, I suppose. Windows VMs don't take kindly to even
 the slightest of parameter changes, so if there's a tool that takes the
 commandline flags and generates the XML, that'd be awesome.
 
-If you really require SLiRP networking (user mode) to work and want to route
+If you really need SLiRP networking (user mode) to work and want to route
 through wireguard, you could consider using network namespaces to achieve the
 same result. I like the flexibility offered by the TAP setup that lets my host
 and LAN devices interfact with the VM in a much more _normal_ way (subjective).
