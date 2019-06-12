@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
+    <meta name="description" content="I needed to setup a VM that could only have connectivity through a specific wireguard endpoint. Previoiusly, the VM was using user mode networking (SLiRP) which required no setup. I asked around on IR">
 <meta name="keywords" content="passthrough,networking,qemu,vpn,wireguard">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Setting up TUN&#x2F;TAP networking for QEMU VM&#39;s (and bonus wireguard)">
 <meta property="og:url" content="https://stty.io/2019/05/13/qemu-vm-wireguard-vpn-tun-tap-networking/index.html">
 <meta property="og:site_name" content="stty.io">
-<meta property="og:description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
+<meta property="og:description" content="I needed to setup a VM that could only have connectivity through a specific wireguard endpoint. Previoiusly, the VM was using user mode networking (SLiRP) which required no setup. I asked around on IR">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-13T10:44:49.029Z">
+<meta property="og:updated_time" content="2019-06-12T03:11:11.709Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Setting up TUN&#x2F;TAP networking for QEMU VM&#39;s (and bonus wireguard)">
-<meta name="twitter:description" content="I had a need to setup a VM that had to only have connectivity through a specific wireguard endpoint. The VM was using user mode networking earlier (SLiRP) which required no setup. I asked around on IR">
+<meta name="twitter:description" content="I needed to setup a VM that could only have connectivity through a specific wireguard endpoint. Previoiusly, the VM was using user mode networking (SLiRP) which required no setup. I asked around on IR">
     
     
         
@@ -144,15 +144,15 @@
   
 
   <div class="content" itemprop="articleBody">
-    <p>I had a need to setup a VM that had to <em>only</em> have connectivity through a
-specific wireguard endpoint. The VM was using user mode networking earlier
+    <p>I needed to setup a VM that could <em>only</em> have connectivity through a
+specific wireguard endpoint. Previoiusly, the VM was using user mode networking
 (SLiRP) which required no setup. I asked around on IRC and was told that
 libvirt takes care of that stuff for you so most folks don’t care - but I
 already have a few VM’s and am not ready for black magic or XML. I will
 eventually have to move them, I suppose. Windows VMs don’t take kindly to even
 the slightest of parameter changes, so if there’s a tool that takes the
 commandline flags and generates the XML, that’d be awesome.</p>
-<p>If you really require SLiRP networking (user mode) to work and want to route
+<p>If you really need SLiRP networking (user mode) to work and want to route
 through wireguard, you could consider using network namespaces to achieve the
 same result. I like the flexibility offered by the TAP setup that lets my host
 and LAN devices interfact with the VM in a much more <em>normal</em> way (subjective).</p>
