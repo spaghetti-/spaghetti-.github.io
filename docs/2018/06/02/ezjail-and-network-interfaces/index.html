@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="I was updating and adding a new service to one of my servers when I needed to fiddle with ezjail. ezjail, as its name suggests, makes creating and maintaing jails quite simple. According to the handbo">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-18T11:18:23.126Z">
+<meta property="og:updated_time" content="2019-12-28T07:55:42.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ezjail and Network Interfaces">
 <meta name="twitter:description" content="I was updating and adding a new service to one of my servers when I needed to fiddle with ezjail. ezjail, as its name suggests, makes creating and maintaing jails quite simple. According to the handbo">
@@ -64,7 +64,7 @@
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </span>
@@ -98,6 +98,7 @@
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&title=ezjail and Network Interfaces"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&title=ezjail and Network Interfaces"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&name=ezjail and Network Interfaces&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&t=ezjail and Network Interfaces"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -192,7 +193,7 @@ rebooted.</p>
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </div>
@@ -213,6 +214,7 @@ rebooted.</p>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&title=ezjail and Network Interfaces"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&title=ezjail and Network Interfaces"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&name=ezjail and Network Interfaces&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2018/06/02/ezjail-and-network-interfaces/&t=ezjail and Network Interfaces"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -242,7 +244,7 @@ rebooted.</p>
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </nav>
@@ -257,6 +259,29 @@ rebooted.</p>
     <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
 <script src="/js/main.js"></script>
 <!-- search -->
 

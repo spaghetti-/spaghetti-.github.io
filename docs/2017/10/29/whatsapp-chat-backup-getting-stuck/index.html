@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="Sometimes the iOS WhatsApp application refuses to perform its chat backup properly. Yesterday, my backup was stuck at 152kB/couple of GB for the better part of the day. Restarting your phone, restarti">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-18T11:18:23.128Z">
+<meta property="og:updated_time" content="2019-12-28T07:55:42.188Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WhatsApp chat backup getting stuck&#x2F;no progress">
 <meta name="twitter:description" content="Sometimes the iOS WhatsApp application refuses to perform its chat backup properly. Yesterday, my backup was stuck at 152kB/couple of GB for the better part of the day. Restarting your phone, restarti">
@@ -64,7 +64,7 @@
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </span>
@@ -98,6 +98,7 @@
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&title=WhatsApp chat backup getting stuck/no progress"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&title=WhatsApp chat backup getting stuck/no progress"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&name=WhatsApp chat backup getting stuck/no progress&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&t=WhatsApp chat backup getting stuck/no progress"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -174,7 +175,7 @@ manually. This fixes the issue.</p>
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </div>
@@ -195,6 +196,7 @@ manually. This fixes the issue.</p>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&title=WhatsApp chat backup getting stuck/no progress"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&title=WhatsApp chat backup getting stuck/no progress"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&name=WhatsApp chat backup getting stuck/no progress&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2017/10/29/whatsapp-chat-backup-getting-stuck/&t=WhatsApp chat backup getting stuck/no progress"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -224,7 +226,7 @@ manually. This fixes the issue.</p>
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </nav>
@@ -239,6 +241,29 @@ manually. This fixes the issue.</p>
     <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
 <script src="/js/main.js"></script>
 <!-- search -->
 

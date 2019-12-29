@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="stty.io">
 <meta property="og:description" content="I often find myself spawning random DigitalOcean FreeBSD droplets for prototyping web services. Just because they are temporary does not mean that they should not have secure defaults however. Here’s">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-18T11:18:23.128Z">
+<meta property="og:updated_time" content="2019-12-28T07:55:42.188Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bootstrap sane defaults for sshd and ipfw">
 <meta name="twitter:description" content="I often find myself spawning random DigitalOcean FreeBSD droplets for prototyping web services. Just because they are temporary does not mean that they should not have secure defaults however. Here’s">
@@ -64,7 +64,7 @@
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </span>
@@ -98,6 +98,7 @@
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&name=Bootstrap sane defaults for sshd and ipfw&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&t=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -180,7 +181,7 @@ tcp in on port 22 by default. </p>
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </div>
@@ -201,6 +202,7 @@ tcp in on port 22 by default. </p>
   <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&title=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&name=Bootstrap sane defaults for sshd and ipfw&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2017/03/09/sane-sshd-ipfw-defaults/&t=Bootstrap sane defaults for sshd and ipfw"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -230,7 +232,7 @@ tcp in on port 22 by default. </p>
          
           <li><a href="/archives/">Writing</a></li>
          
-          <li><a href="https://github.com/spaghetti-">Projects</a></li>
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
         
       </ul>
     </nav>
@@ -245,6 +247,29 @@ tcp in on port 22 by default. </p>
     <!-- jquery -->
 <script src="/lib/jquery/jquery.min.js"></script>
 <script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
 <script src="/js/main.js"></script>
 <!-- search -->
 
