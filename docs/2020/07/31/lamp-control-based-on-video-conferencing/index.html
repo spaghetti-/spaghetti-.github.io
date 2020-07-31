@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="I’ve been working from home for a long time now (ever since COVID-19) and one of the complaints I’ve had is that I sit facing away from a window (monitors and webcam facing the window). This means my">
+<meta name="keywords" content="automation,macos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Automatically turning on a lamp when in a video meeting">
+<meta property="og:url" content="https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/index.html">
+<meta property="og:site_name" content="stty.io">
+<meta property="og:description" content="I’ve been working from home for a long time now (ever since COVID-19) and one of the complaints I’ve had is that I sit facing away from a window (monitors and webcam facing the window). This means my">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.imgur.com/3ka27KB.jpg">
+<meta property="og:updated_time" content="2020-07-31T06:55:38.937Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Automatically turning on a lamp when in a video meeting">
+<meta name="twitter:description" content="I’ve been working from home for a long time now (ever since COVID-19) and one of the complaints I’ve had is that I sit facing away from a window (monitors and webcam facing the window). This means my">
+<meta name="twitter:image" content="https://i.imgur.com/3ka27KB.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Automatically turning on a lamp when in a video meeting</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/12/28/rtorrent-move-on-completion-flood/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&text=Automatically turning on a lamp when in a video meeting"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&is_video=false&description=Automatically turning on a lamp when in a video meeting"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Automatically turning on a lamp when in a video meeting&body=Check out this article: https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&name=Automatically turning on a lamp when in a video meeting&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&t=Automatically turning on a lamp when in a video meeting"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Detecting-webcam-use"><span class="toc-number">1.</span> <span class="toc-text">Detecting webcam use</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Proxying-the-command"><span class="toc-number">2.</span> <span class="toc-text">Proxying the command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tying-it-all-together"><span class="toc-number">3.</span> <span class="toc-text">Tying it all together</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ref"><span class="toc-number">4.</span> <span class="toc-text">Ref</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Automatically turning on a lamp when in a video meeting
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">stty.io</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-07-31T06:15:04.000Z" itemprop="datePublished">2020-07-31</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/automation/">automation</a>, <a class="tag-link" href="/tags/macos/">macos</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>I’ve been working from home for a long time now (ever since COVID-19) and one of
+the complaints I’ve had is that I sit facing away from a window (monitors and
+webcam facing the window). This means my colleagues get a really dark view of my
+face after auto brightness accounts for the window or my ceiling lights.</p>
+<p>To fix this, I bought a cheap IKEA TERTIAL lamp[0] which retails for 20 bucks,
+and aimed it at the wall in front of me to diffuse the light. I used a spare
+Phillips Hue bulb that I had lying around giving me easy controls from Apple
+Home.</p>
+<p><img src="https://i.imgur.com/3ka27KB.jpg" alt="bulb"></p>
+<p>That’s still too many actions for my liking because I’d have to open up
+control center, go to Home, and turn on the light. Not to mention doing the same
+thing one my meeting is over.</p>
+<p>It’s pretty straightforward to automate this, we need to</p>
+<ul>
+<li>detect if the webcam is enabled</li>
+<li>(in my case) setup a proxy over another computer to avoid storing creds on my
+corp laptop</li>
+<li>control the light over the Hue bridge using its API</li>
+</ul>
+<p>Detecting if the webcam is enabled is surprisingly easy. All the links on Google
+point to checking for processing using <code>AppleCamera</code> or <code>VDC</code> but I don’t think
+that works anymore (at least, it does not work for me on Catalina). Instead,
+we’ll use the <code>Console.app</code> program or the command line equivalent <code>log</code> that
+comes built-in to MacOS.</p>
+<h2 id="Detecting-webcam-use"><a href="#Detecting-webcam-use" class="headerlink" title="Detecting webcam use"></a>Detecting webcam use</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">log</span> show --predicate <span class="string">'subsystem == "com.apple.VDCAssistant" &amp;&amp; \</span></span><br><span class="line"><span class="string">    eventMessage CONTAINS[c] "kCameraStream"'</span> --last 1m --no-debug --no-pager \</span><br><span class="line">    --style compact | tail -n +2)</span><br></pre></td></tr></table></figure>
+<p>which tells us if events like <code>kCameraStreamStart</code> and <code>kCameraStreamStop</code>
+occur, which seems to occur each time the camera starts and stops. Note that
+this command does not seem to work as a normal, unpriviledged user and instead,
+root access. There’s probably a way to work around this, but this is a hack
+<em>cough</em> short term solution <em>cough</em>.</p>
+<p>Controlling lights over the Hue bridge with it’s API is relatively
+straightforward, we just need to get a token from the hue developer portal. Once
+you have the token you can then control the light with a simple <code>PUT</code> query like
+so:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/zsh</span></span><br><span class="line"></span><br><span class="line">TOKEN=your_token_here</span><br><span class="line">BULB_ID=7</span><br><span class="line"></span><br><span class="line"><span class="built_in">read</span> M</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$M</span>"</span> = <span class="string">"bulb:on"</span> ]; <span class="keyword">then</span></span><br><span class="line">  curl -X PUT -H <span class="string">"Content-Type: application/json"</span> -d <span class="string">'&#123;"on": true&#125;'</span> \</span><br><span class="line">    http://<span class="variable">$&#123;HUE_HUB_IP&#125;</span>/api/<span class="variable">$&#123;TOKEN&#125;</span>/lights/<span class="variable">$&#123;BULB_ID&#125;</span>/state</span><br><span class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$M</span>"</span> = <span class="string">"bulb:off"</span> ]; <span class="keyword">then</span></span><br><span class="line">  curl -X PUT -H <span class="string">"Content-Type: application/json"</span> -d <span class="string">'&#123;"on": false&#125;'</span> \</span><br><span class="line">    http://<span class="variable">$&#123;HUE_HUB_IP&#125;</span>/api/<span class="variable">$&#123;TOKEN&#125;</span>/lights/<span class="variable">$&#123;BULB_ID&#125;</span>/state</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">echo</span></span><br></pre></td></tr></table></figure>
+<p>I have made the script read for events like <code>bulb:on</code> from stdin that’ll be then
+used to toggle the state.</p>
+<h2 id="Proxying-the-command"><a href="#Proxying-the-command" class="headerlink" title="Proxying the command"></a>Proxying the command</h2><p>I keep this running on a personal computer in my household and expose it over a
+TCP port with socat. It’s kept daemonized with start-stop-daemon and OpenRC.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/sbin/openrc-run</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">depend</span></span>() &#123;</span><br><span class="line">        need net</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">start</span></span>() &#123;</span><br><span class="line">        ebegin <span class="string">"Starting bulb control"</span></span><br><span class="line">        start-stop-daemon -S -m -p <span class="variable">$&#123;MEET_PIDFILE&#125;</span> -u alex --quiet --background \</span><br><span class="line">          socat -- -u tcp<span class="_">-l</span>:6338,reuseaddr,fork system:/home/alex/.homebridge/meet.sh</span><br><span class="line">        eend $?</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">stop</span></span>() &#123;</span><br><span class="line">        ebegin <span class="string">"Stopping bulb control"</span></span><br><span class="line">        <span class="built_in">kill</span> -- -`cat <span class="variable">$&#123;MEET_PIDFILE&#125;</span>`</span><br><span class="line"></span><br><span class="line">        rm <span class="variable">$&#123;MEET_PIDFILE&#125;</span></span><br><span class="line">        eend $?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Each time there’s anything sent to tcp:6338 it runs the script which then
+controls the bulb. With this, all the corp laptop sees is a string sent to a
+local computer using netcat.</p>
+<h2 id="Tying-it-all-together"><a href="#Tying-it-all-together" class="headerlink" title="Tying it all together"></a>Tying it all together</h2><p>The script to detect the webcam state is put in the root users crontab on the
+laptop. It then sends the appropriate string to the proxy script to toggle the
+physical state of the bulb.</p>
+<p>I set the script to check for the status of the webcam every 1 minute, which is
+a relatively cheap operation and does not affect the performance of the laptop.
+Just in case, I also verified that cron commands aren’t triggered when the
+laptop is sleeping[1].</p>
+<p>The user experience is pretty good, I hop on a call with Google
+Meet, which enables the camera, which triggers the lamp, and which automatically
+turns it off after I’m done.</p>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p>[0] <a href="https://www.ikea.com/sg/en/p/tertial-work-lamp-dark-grey-50355395/" target="_blank" rel="noopener">https://www.ikea.com/sg/en/p/tertial-work-lamp-dark-grey-50355395/</a></p>
+<p>[1] <a href="https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/ScheduledJobs.html#//apple_ref/doc/uid/10000172i-CH1-SW3" target="_blank" rel="noopener">https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/ScheduledJobs.html#//apple_ref/doc/uid/10000172i-CH1-SW3</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Detecting-webcam-use"><span class="toc-number">1.</span> <span class="toc-text">Detecting webcam use</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Proxying-the-command"><span class="toc-number">2.</span> <span class="toc-text">Proxying the command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tying-it-all-together"><span class="toc-number">3.</span> <span class="toc-text">Tying it all together</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ref"><span class="toc-number">4.</span> <span class="toc-text">Ref</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&text=Automatically turning on a lamp when in a video meeting"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&is_video=false&description=Automatically turning on a lamp when in a video meeting"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Automatically turning on a lamp when in a video meeting&body=Check out this article: https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&title=Automatically turning on a lamp when in a video meeting"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&name=Automatically turning on a lamp when in a video meeting&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://stty.io/2020/07/31/lamp-control-based-on-video-conferencing/&t=Automatically turning on a lamp when in a video meeting"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 Alex
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/spaghetti-">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
