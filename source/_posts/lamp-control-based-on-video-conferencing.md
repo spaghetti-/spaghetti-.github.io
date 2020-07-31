@@ -42,6 +42,9 @@ Detecting webcam use
 sudo log show --predicate 'subsystem == "com.apple.VDCAssistant" && \
     eventMessage CONTAINS[c] "kCameraStream"' --last 1m --no-debug --no-pager \
     --style compact | tail -n +2)
+
+#or
+log stream ... # streaming is better to generate events
 ```
 
 which tells us if events like `kCameraStreamStart` and `kCameraStreamStop`
@@ -57,6 +60,8 @@ so:
 
 ```sh
 #!/bin/zsh
+
+# This script runs on the middleman host
 
 TOKEN=your_token_here
 BULB_ID=7
@@ -111,15 +116,51 @@ local computer using netcat.
 Tying it all together
 ---------------------
 
-The script to detect the webcam state is put in the root users crontab on the
+(this section is slightly updated, to remove the use of cron)
+
+~~The script to detect the webcam state is put in the root users crontab on the
 laptop. It then sends the appropriate string to the proxy script to toggle the
-physical state of the bulb.
+physical state of the bulb.~~
 
-I set the script to check for the status of the webcam every 1 minute, which is
-a relatively cheap operation and does not affect the performance of the laptop.
-Just in case, I also verified that cron commands aren't triggered when the
-laptop is sleeping[1].
+The script to detect the status of the webcam uses `log stream` instead of `log
+show`, which eliminates the need for a minutely cron. 60 seconds without a lamp
+is still quite a noticeable delay in a meeting. Using the stream, it's put in a
+script as so
 
+```sh
+#!/bin/bash
+
+while read S; do
+        if echo "$S" | grep -q "kCameraStreamStop"; then
+                echo "bulb:off" | nc trixie.local 6338
+        elif echo "$S" | grep -q "kCameraStreamStart"; then
+                echo "bulb:on" | nc trixie.local 6338
+        fi
+done < <(log stream --predicate 'subsystem == "com.apple.VDCAssistant" && \
+         eventMessage CONTAINS[c] "kCameraStream"' --no-debug --style compact)
+```
+
+and launched using `launchd`.  The launch daemon is dumped into
+`/Library/LaunchDaemons/` as `com.alex.bulb`.
+
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+        <dict>
+                <key>Label</key>
+                <string>com.alex.bulb</string>
+                <key>Program</key>
+                <string>/path/to/script.sh</string>
+                <key>RunAtLoad</key>
+                <true/>
+        </dict>
+</plist>
+```
+
+It can then be launched with `launchctl load com.alex.bulb` and `launchctl start
+...`.
 
 The user experience is pretty good, I hop on a call with Google
 Meet, which enables the camera, which triggers the lamp, and which automatically
